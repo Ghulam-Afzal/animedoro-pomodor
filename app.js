@@ -3,9 +3,15 @@ const pTimer = document.querySelector(".timer");
 const startBtn = document.querySelector('.start');
 const stopBtn = document.querySelector('.stop');
 const pauseBtn = document.querySelector('.pause');
+const header = document.querySelector('.header'); 
+const animeBtn = document.querySelector('.Animedoro'); 
+const pomoBtn = document.querySelector('.Pomodoro');
 
-// const input = document.querySelector('#input'); 
+const workInput = document.querySelector('#work-time'); 
+const breakInput = document.querySelector('#break-time');
 
+workInput.value = '25'
+breakInput.value = '5'
 // set up the initail values for the timer in seconds 
 let workDuration = 1500; 
 let currentTimeleft = 1500; 
@@ -17,16 +23,11 @@ let clockoff = true;
 
 // calulate the value for the time in minutes and then make it the default value that is shown in the html, so there is something there
 initialTime = (currentTimeleft / 60) % 60; 
-pTimer.innerHTML = String(`${initialTime}:00`); 
+pTimer.innerHTML = String(`${initialTime}:00`);
 
-
-if (length(input.value != 0)) { 
-    currentTimeleft = parseInt(input.value); 
-}
 
 startBtn.addEventListener('click', () => {
     timer(); 
-    console.log(currentTimeleft)
 })
 
 pauseBtn.addEventListener('click', () => { 
@@ -36,6 +37,47 @@ pauseBtn.addEventListener('click', () => {
 stopBtn.addEventListener('click', () => { 
     timer(true); 
 })
+
+animeBtn.addEventListener('click', () => { 
+    header.innerHTML = "Animedoro Timer"; 
+    workDuration = 3540; 
+    currentTimeleft = workDuration; 
+    initialBreak = 1200;
+    updateInitialTime();  
+})
+
+pomoBtn.addEventListener('click', () => { 
+    header.innerHTML = "Pomodoro Timer"; 
+    workDuration = 1500; 
+    currentTimeleft = workDuration; 
+    initialBreak = 300;
+    updateInitialTime();  
+})
+
+workInput.addEventListener('input', () => {
+    let updateWorkTimer = minsToSecs(workInput.value)
+    currentTimeleft = updateWorkTimer ?  updateWorkTimer : workDuration
+    workDuration = currentTimeleft; 
+    updateInitialTime(workDuration); 
+
+})
+
+breakInput.addEventListener('input', () => {
+    let updateBreakTimer = minsToSecs(breakInput.value)
+    currentTimeleft = updateBreakTimer ?  updateBreakTimer : initialBreak
+    initialBreak = currentTimeleft; 
+    updateInitialTime(initialBreak); 
+
+})
+
+const minsToSecs = mins => {
+    return mins * 60; 
+}
+
+const updateInitialTime = (time) => { 
+    initialTime = (workDuration / 60) % 60; 
+    pTimer.innerHTML = String(`${initialTime}:00`);
+}
 
 // initial func to make the timer work
 const timer = condition => { 
