@@ -17,8 +17,9 @@ let workDuration = 1500;
 let currentTimeleft = 1500; 
 let initialBreak = 300;  
 
-let pType = 'Pomodoro'; 
-let pomodorosCompleted = 3; 
+let pType = 'Animedoro'; 
+let pomodorosCompleted = 4; 
+let type = 'work'; 
 
 let clockOn = false; 
 let clockoff = true; 
@@ -43,11 +44,10 @@ stopBtn.addEventListener('click', () => {
 animeBtn.addEventListener('click', () => { 
     pType = "Animedoro"; 
     header.innerHTML = "Animedoro Timer"; 
-    workDuration = 3540; 
+    // workDuration = 3540; 
     currentTimeleft = workDuration; 
     initialBreak = 1200;
-    workInput.value = workDuration / 60; 
-    breakInput.value = initialBreak / 60;
+    updateInputValueShown(); 
     updateInitialTime();  
 })
 
@@ -57,8 +57,7 @@ pomoBtn.addEventListener('click', () => {
     workDuration = 1500; 
     currentTimeleft = workDuration; 
     initialBreak = 300;
-    workInput.value = workDuration / 60; 
-    breakInput.value = initialBreak / 60;
+    updateInputValueShown();
     updateInitialTime();  
 })
 
@@ -83,8 +82,13 @@ const minsToSecs = mins => {
 }
 
 const updateInitialTime = (time) => { 
-    initialTime = (workDuration / 60) % 60; 
+    initialTime = (currentTimeleft / 60) % 60; 
     pTimer.innerHTML = String(`${initialTime}:00`);
+}
+
+const updateInputValueShown = () => { 
+    workInput.value = workDuration / 60; 
+    breakInput.value = initialBreak / 60;
 }
 
 // initial func to make the timer work
@@ -105,42 +109,51 @@ const timer = condition => {
     }
 }
 
-const countDown = () => {
+// need to add support for pomodoro 
+const countDown = () => { 
     if (currentTimeleft > 0) { 
         currentTimeleft--; 
-    }if(currentTimeleft == 0) { 
-       if (pomodorosCompleted != 4) { 
-        if (pType === 'Animedoro') { 
-            pomodorosCompleted += 1; 
-            workDuration = initialBreak;
-            currentTimeleft = workDuration;
-            updateInitialTime(); 
-            timer(true); 
-        }else { 
-            pomodorosCompleted += 1;
-            workDuration = initialBreak;
-            currentTimeleft = workDuration ;          
-            updateInitialTime(); 
-            timer(true); 
+    }else if (currentTimeleft === 0) { 
+        if (pomodorosCompleted !== 4) { 
+            if (pType === 'Animedoro') { 
+                // workDuration = initialBreak;
+                if (type === 'work') { 
+                    type = 'break'; 
+                    currentTimeleft = initialBreak;
+                }else { 
+                    type = 'work'; 
+                    currentTimeleft = workDuration;
+                    pomodorosCompleted += 1; 
+                }
+                
+                updateInitialTime(); 
+                timer(true); 
+            }
+        }else if (pomodorosCompleted === 4) { 
+            if (pType === 'Animedoro'){ 
+                
+                if (type === 'work') { 
+                    type = 'break'; 
+                    currentTimeleft = initialBreak * 2;
+                    pomodorosCompleted = 0; 
+                    
+                }else if (type === 'break') {
+                        type = 'work'; 
+                        currentTimeleft = initialBreak ;
+                    }else { 
+                        type = 'work'; 
+                        currentTimeleft = workDuration;
+                }
+                updateInitialTime(); 
+                timer(true); 
+            } 
         }
-       }else if (pomodorosCompleted === 4) {
-           if (pType === "Animedoro") { 
-               initialBreak = initialBreak * 2 
-               currentTimeleft = initialBreak;
-               updateInitialTime(); 
-               timer(true); 
-           }else { 
-            initialBreak = initialBreak * 4
-            currentTimeleft = initialBreak;
-            updateInitialTime(); 
-            timer(true); 
-           }
-       }
-
     }
 }
-console.log(pomodorosCompleted); 
 
+
+
+// needs to be redone 
 // show calculate the time and update the displayo to show it 
 const displayUpdatedTime = () => { 
     const secsLeft = currentTimeleft; 
@@ -165,11 +178,11 @@ const stopClock = () => {
     
     clockoff = true; 
     clockOn = false; 
-    
-    if (pType === 'Animedoro') { 
-        currentTimeleft = 3540;
-    }else if(pType ==='Pomodoro'){ 
-        currentTimeleft = workDuration;
-    }    
+    //issue that is causing the function to mess up 
+    // if (pType === 'Animedoro') { 
+    //     currentTimeleft = workDuration;
+    // }else if(pType ==='Pomodoro'){ 
+    //     currentTimeleft = workDuration;
+    // }    
     displayUpdatedTime(); 
 }
