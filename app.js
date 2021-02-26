@@ -17,6 +17,8 @@ let workDuration = 1500;
 let currentTimeleft = 1500; 
 let initialBreak = 300;  
 
+let pType = 'Pomodoro'; 
+let pomodorosCompleted = 3; 
 
 let clockOn = false; 
 let clockoff = true; 
@@ -39,18 +41,24 @@ stopBtn.addEventListener('click', () => {
 })
 
 animeBtn.addEventListener('click', () => { 
+    pType = "Animedoro"; 
     header.innerHTML = "Animedoro Timer"; 
     workDuration = 3540; 
     currentTimeleft = workDuration; 
     initialBreak = 1200;
+    workInput.value = workDuration / 60; 
+    breakInput.value = initialBreak / 60;
     updateInitialTime();  
 })
 
 pomoBtn.addEventListener('click', () => { 
+    pType = 'Pomodoro';
     header.innerHTML = "Pomodoro Timer"; 
     workDuration = 1500; 
     currentTimeleft = workDuration; 
     initialBreak = 300;
+    workInput.value = workDuration / 60; 
+    breakInput.value = initialBreak / 60;
     updateInitialTime();  
 })
 
@@ -90,13 +98,48 @@ const timer = condition => {
         }else {
             clockOn = true; 
             clockTimer = setInterval (() => { 
-                currentTimeleft--; 
+                countDown(); 
                 displayUpdatedTime(); 
             }, 1000)
         }
     }
 }
 
+const countDown = () => {
+    if (currentTimeleft > 0) { 
+        currentTimeleft--; 
+    }if(currentTimeleft == 0) { 
+       if (pomodorosCompleted != 4) { 
+        if (pType === 'Animedoro') { 
+            pomodorosCompleted += 1; 
+            workDuration = initialBreak;
+            currentTimeleft = workDuration;
+            updateInitialTime(); 
+            timer(true); 
+        }else { 
+            pomodorosCompleted += 1;
+            workDuration = initialBreak;
+            currentTimeleft = workDuration ;          
+            updateInitialTime(); 
+            timer(true); 
+        }
+       }else if (pomodorosCompleted === 4) {
+           if (pType === "Animedoro") { 
+               initialBreak = initialBreak * 2 
+               currentTimeleft = initialBreak;
+               updateInitialTime(); 
+               timer(true); 
+           }else { 
+            initialBreak = initialBreak * 4
+            currentTimeleft = initialBreak;
+            updateInitialTime(); 
+            timer(true); 
+           }
+       }
+
+    }
+}
+console.log(pomodorosCompleted); 
 
 // show calculate the time and update the displayo to show it 
 const displayUpdatedTime = () => { 
@@ -123,6 +166,10 @@ const stopClock = () => {
     clockoff = true; 
     clockOn = false; 
     
-    currentTimeleft = workDuration; 
+    if (pType === 'Animedoro') { 
+        currentTimeleft = 3540;
+    }else if(pType ==='Pomodoro'){ 
+        currentTimeleft = workDuration;
+    }    
     displayUpdatedTime(); 
 }

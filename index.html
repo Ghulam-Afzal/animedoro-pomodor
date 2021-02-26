@@ -6,24 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animedoro/Pomodoro</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="nav.css">
 </head>
 <body>
-    <div class="container">
-        <h1 class="header">Animedoro/Pomodoro</h1>
-        <div class="timer"></div>
-        <div class="buttons">
-            <button class="Animedoro">Animedoro</button>
-            <button class="Pomodoro">Pomodoro</button>
+    <nav class='navbar'>
+        <span class="nav-toggle" id="js-nav-toggle">
+            &caron;
+        </span>
+        <a href='#' class="logo">Logo</a>
+        <ul class="main-nav" id='js-menu'>
+            <li>
+                <a href="#" class="nav-links">Home</a>
+            </li>
+            <li>
+                <a href="#" class="nav-links">Login/Sign Up</a>
+            </li>
+            <li>
+                <a href="#" class="nav-links">Leaderboard</a>
+            </li>
+            <li>
+                <a href="#" class="nav-links">Github</a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <div class="container">
+            <h1 class="header">Animedoro/Pomodoro</h1>
+            <div class="timer"></div>
+            <div class="btn1">
+                <button class="Animedoro">Animedoro</button>
+                <button class="Pomodoro">Pomodoro</button>
+            </div>
+            <input name ='work-time' id="work-time" type="number">
+            <input name ='break-time' id="break-time" type="number">
+            <div class="btn2">
+                <button class="start">start</button>
+                <button class="pause">pause</button>
+                <button class="stop">stop</button>
+            </div>
         </div>
-        <input name ='work-time' id="work-time" type="number">
-        <input name ='break-time' id="break-time" type="number">
-        <div class="buttons">
-            <button class="start">start</button>
-            <button class="pause">pause</button>
-            <button class="stop">stop</button>
-        </div>
-    </div>
+    </main>
 
     <script src="app.js"></script>
+    <script src="nav.js"></script>
 </body>
 </html>
