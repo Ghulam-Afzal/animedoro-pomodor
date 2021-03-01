@@ -1,4 +1,6 @@
+
 const pTimer = document.querySelector(".timer");
+
 
 const startBtn = document.querySelector('.start');
 const stopBtn = document.querySelector('.stop');
@@ -17,7 +19,10 @@ let workDuration = 1500;
 let currentTimeleft = 1500; 
 let initialBreak = 300;  
 
-let pType = 'Animedoro'; 
+let animeLongBreak = initialBreak * 2; 
+let pomoLongBreak = initialBreak * 4; 
+
+let pType = 'Pomodoro'; 
 let pomodorosCompleted = 4; 
 let type = 'work'; 
 
@@ -25,8 +30,10 @@ let clockOn = false;
 let clockoff = true; 
 
 // calulate the value for the time in minutes and then make it the default value that is shown in the html, so there is something there
-initialTime = (currentTimeleft / 60) % 60; 
-pTimer.innerHTML = String(`${initialTime}:00`);
+// initialTime = (currentTimeleft / 60) % 60; 
+// pTimer.innerHTML = String(`${initialTime}:00`);
+
+
 
 
 startBtn.addEventListener('click', () => {
@@ -125,24 +132,43 @@ const countDown = () => {
                     currentTimeleft = workDuration;
                     pomodorosCompleted += 1; 
                 }
-                
+                updateInitialTime(); 
+                timer(true); 
+            }else if (pType === 'Pomodoro') { 
+                if (type = 'work') { 
+                    type = 'break'; 
+                    currentTimeleft = initialBreak; 
+                }else { 
+                    type = 'work'; 
+                    currentTimeleft = workDuration; 
+                    pomodorosCompleted += 1; 
+                }
                 updateInitialTime(); 
                 timer(true); 
             }
         }else if (pomodorosCompleted === 4) { 
             if (pType === 'Animedoro'){ 
-                
                 if (type === 'work') { 
                     type = 'break'; 
-                    currentTimeleft = initialBreak * 2;
+                    currentTimeleft = animeLongBreak;
                     pomodorosCompleted = 0; 
-                    
                 }else if (type === 'break') {
                         type = 'work'; 
                         currentTimeleft = initialBreak ;
                     }else { 
                         type = 'work'; 
                         currentTimeleft = workDuration;
+                }
+                updateInitialTime(); 
+                timer(true); 
+            }else if (pType === 'Pomodoro') { 
+                if (type === 'work') { 
+                    type = 'break'; 
+                    currentTimeleft = pomoLongBreak; 
+                    pomodorosCompleted = 0;
+                }else { 
+                    type = 'break'; 
+                    currentTimeleft = workDuration;
                 }
                 updateInitialTime(); 
                 timer(true); 
@@ -157,7 +183,7 @@ const countDown = () => {
 // show calculate the time and update the displayo to show it 
 const displayUpdatedTime = () => { 
     const secsLeft = currentTimeleft; 
-    let time = ''; 
+    let output = ''; 
     const secs = secsLeft % 60; 
     const mins = parseInt(secsLeft / 60) % 60; 
     const hours = parseInt(secsLeft / 3600); 
@@ -165,12 +191,13 @@ const displayUpdatedTime = () => {
     const leadingZeroes = time => { 
         return time < 10 ? `0${time}` : time 
     }
-
-    if (hours > 0) time += `${hours}:`
-    time += `${leadingZeroes(mins)}:${leadingZeroes(secs)}`
-    pTimer.innerHTML = time.toString(); 
+    console.log(hours)
+    if (hours > 0) output += `${hours}:`;
+    output += `${leadingZeroes(mins)}:${leadingZeroes(secs)}`;
+    pTimer.innerHTML = output.toString(); 
 
 }
+
 
 const stopClock = () => { 
     // reset everthign to the original state and stop the timer 
@@ -178,11 +205,7 @@ const stopClock = () => {
     
     clockoff = true; 
     clockOn = false; 
-    //issue that is causing the function to mess up 
-    // if (pType === 'Animedoro') { 
-    //     currentTimeleft = workDuration;
-    // }else if(pType ==='Pomodoro'){ 
-    //     currentTimeleft = workDuration;
-    // }    
+    currentTimeleft = workDuration
+    type = 'work'    
     displayUpdatedTime(); 
 }
