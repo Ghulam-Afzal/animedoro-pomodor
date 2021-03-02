@@ -33,15 +33,16 @@
     <main>
         <div class="container">
             <h1 class="header">Animedoro/Pomodoro</h1>
-            <div class="timer">
-                <span class="mins"></span>
-                :
-                <span class="secs:"></span>
+            <div class="timer"></div>
+            <div>
+                <input  id="session-input" onfocus="this.value=''" type="text" placeholder='task'>
+                
             </div>
             <div class="btn1">
                 <button class="Animedoro">Animedoro</button>
                 <button class="Pomodoro">Pomodoro</button>
             </div>
+            <div class="test"></div>
             <input name ='work-time' id="work-time" type="number">
             <input name ='break-time' id="break-time" type="number">
             <div class="btn2">
@@ -51,7 +52,9 @@
             </div>
         </div>
     </main>
-
+    <h3>Session Log</h3>
+    <ul class="sessions">
+    </ul>
     <script src="app.js"></script>
     <script src="nav.js"></script>
 </body>
