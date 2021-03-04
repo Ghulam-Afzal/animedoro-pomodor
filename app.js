@@ -5,9 +5,9 @@ const pTimer = document.querySelector(".timer");
 const startBtn = document.querySelector('.start');
 const stopBtn = document.querySelector('.stop');
 const pauseBtn = document.querySelector('.pause');
-const header = document.querySelector('.header'); 
-const animeBtn = document.querySelector('.Animedoro'); 
-const pomoBtn = document.querySelector('.Pomodoro');
+const header = document.querySelector('.mode'); 
+const animeBtn = document.querySelector('.animedoro'); 
+const pomoBtn = document.querySelector('.pomodoro');
 const taskName = document.querySelector('#session-input')
 const eTask = document.querySelector('.enter-task')
 const workInput = document.querySelector('#work-time'); 
@@ -27,7 +27,7 @@ let animeLongBreak = initialBreak * 2;
 let pomoLongBreak = initialBreak * 4; 
 
 let pType = 'Pomodoro'; 
-let pomodorosCompleted = 4; 
+let pomodorosCompleted = 0; 
 let type = 'work'; 
 
 let clockOn = false; 
@@ -39,6 +39,7 @@ pTimer.innerHTML = String(`${initialTime}:00`);
 
 
 startBtn.addEventListener('click', () => {
+    checkNotificationPerms(); 
     timer(); 
 })
 
@@ -119,30 +120,34 @@ const countDown = () => {
         currentTimeleft--; 
         sessionTime++; 
     }else if (currentTimeleft === 0) { 
-        sessionTime = 0; 
         if (pomodorosCompleted !== 4) { 
             if (pType === 'Animedoro') { 
-                // workDuration = initialBreak;
                 if (type === 'work') { 
                     type = 'break'; 
                     currentTimeleft = initialBreak;
+                    notifyUser('Time is up','Time for a anime ep');
                 }else { 
                     type = 'work'; 
                     currentTimeleft = workDuration;
                     pomodorosCompleted += 1; 
+                    notifyUser('Time is up','Time to watch a episode');
                 }
-                updateInitialTime(); 
+                
+                displayUpdatedTime();  
                 timer(true); 
             }else if (pType === 'Pomodoro') { 
                 if (type = 'work') { 
                     type = 'break'; 
-                    currentTimeleft = initialBreak; 
+                    currentTimeleft = initialBreak;
+                    notifyUser('Time is up','Time for a break');
                 }else { 
                     type = 'work'; 
                     currentTimeleft = workDuration; 
                     pomodorosCompleted += 1; 
-                }
-                updateInitialTime(); 
+                    notifyUser('Time is up','time to work again');
+                } 
+                
+                displayUpdatedTime();  
                 timer(true); 
             }
         }else if (pomodorosCompleted === 4) { 
@@ -151,25 +156,32 @@ const countDown = () => {
                     type = 'break'; 
                     currentTimeleft = animeLongBreak;
                     pomodorosCompleted = 0; 
+                    notifyUser('Time is up','time to watch 2 episodes of anime');
                 }else if (type === 'break') {
                         type = 'work'; 
-                        currentTimeleft = initialBreak ;
+                        currentTimeleft = workDuration ;
+                        notifyUser('Time is up','Time to work again');
                     }else { 
                         type = 'work'; 
                         currentTimeleft = workDuration;
+                        notifyUser('Time is up','Time to work again, dont\n dont watch another episode');
                 }
-                updateInitialTime(); 
+                 
+                displayUpdatedTime();  
                 timer(true); 
             }else if (pType === 'Pomodoro') { 
                 if (type === 'work') { 
                     type = 'break'; 
                     currentTimeleft = pomoLongBreak; 
                     pomodorosCompleted = 0;
+                    notifyUser('Time is up','Time for a break');
                 }else { 
                     type = 'break'; 
                     currentTimeleft = workDuration;
+                    notifyUser('Time is up','Time to work');
                 }
-                updateInitialTime(); 
+                 
+                displayUpdatedTime();
                 timer(true); 
             } 
         }
@@ -199,7 +211,7 @@ const displayUpdatedTime = () => {
     const leadingZeroes = time => { 
         return time < 10 ? `0${time}` : time 
     }
-    console.log(hours)
+
     if (hours > 0) output += `${hours}:`;
     output += `${leadingZeroes(mins)}:${leadingZeroes(secs)}`;
     pTimer.innerHTML = output.toString(); 
@@ -218,3 +230,24 @@ const stopClock = () => {
     sessionTime = 0; 
     displayUpdatedTime(); 
 }
+
+
+const notifyUser = (heading, bodyDesc) => { 
+    const notification = new Notification(heading, {
+        body: bodyDesc
+    })
+}
+
+console.log(Notification.permission); 
+
+const checkNotificationPerms = () => { 
+    if (Notification.permission === 'granted') { 
+        console.log('you have granted permission') 
+    }else if (Notification.permission !== 'denied') { 
+        Notification.requestPermission().then(permission => { 
+            console.log(permission); 
+        })
+    }
+}
+
+checkNotificationPerms(); 
