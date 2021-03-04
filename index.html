@@ -31,30 +31,41 @@
         </ul>
     </nav>
     <main>
-        <div class="container">
-            <h1 class="header">Animedoro/Pomodoro</h1>
-            <div class="timer"></div>
+        <section class="hero">
             <div>
-                <input  id="session-input" onfocus="this.value=''" type="text" placeholder='task'>
-                
+                <h1>Animedoro/Pomodoro</h1>
             </div>
-            <div class="btn1">
-                <button class="Animedoro">Animedoro</button>
-                <button class="Pomodoro">Pomodoro</button>
+            <div>
+                <p>This site lets you use the Pomodoro technique along
+                     side with the variation that is known as Animedoro. </p>
+                <p>By default the mode is set to Pomodoro.</p>
             </div>
-            <div class="test"></div>
-            <input name ='work-time' id="work-time" type="number">
-            <input name ='break-time' id="break-time" type="number">
-            <div class="btn2">
-                <button class="start">start</button>
-                <button class="pause">pause</button>
-                <button class="stop">stop</button>
+        </section>
+        <div>
+            <div class="outer-container">
+                <div class="inner-container">
+                    <h1 class="mode">Pomodoro</h1>
+                    <div class="timer"></div>
+                    <div class="btn1">
+                        <button class="animedoro">Animedoro</button>
+                        <button class="pomodoro">Pomodoro</button>
+                    </div>
+                    <input  id="session-input" onfocus="this.value=''" type="text" placeholder='Enter name of task'>
+                    <input name ='work-time' id="work-time" type="number">
+                    <input name ='break-time' id="break-time" type="number">
+                    <div class="btn2">
+                        <button class="start">start</button>
+                        <button class="pause">pause</button>
+                        <button class="stop">stop</button>
+                    </div>
+                </div>
+                <h3>Session Log</h3>
+                <div class='log'>
+                    <ul class="sessions"></ul>
+                </div>
             </div>
         </div>
     </main>
-    <h3>Session Log</h3>
-    <ul class="sessions">
-    </ul>
     <script src="app.js"></script>
     <script src="nav.js"></script>
 </body>
