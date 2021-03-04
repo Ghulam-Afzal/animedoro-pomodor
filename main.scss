@@ -5,51 +5,245 @@
     box-sizing: border-box; 
     padding: 0; 
     margin: 0; 
+    font-family: 'Akaya Telivigala', cursive;
+
 }
 
 body { 
-    font-family: 'Akaya Telivigala', cursive; 
+    overflow: auto;
+    height: 100%;
 }
 
 main { 
-    height: 90vh;
-    display: flex; 
+    text-align: center;
+
+}
+.hero { 
+    height: 50vh;
+    background-color: #B7B5E4;
+    display: flex;
     justify-content: center;
-    // align-items: center;
-    background-color: black;
-    color: white; 
+    align-items: center;
+    flex-direction: column;
 }
 
-.container { 
-    border: 1px solid white; 
-    width: 500px; 
-    height: 500px; 
+.hero h1 { 
+    padding: 1em;
+    font-size: 26px;
+}
+
+.hero p { 
+    padding-left: 1em;
+    padding-right: 1em;
+
+}
+
+.outer-container { 
+    height: 100vh;
+    background-color: #B7B5E4;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    padding: 2rem;
-    border-radius: 5%;
-    background-color: #B2D3C2;
-    margin-top: 5%;
+    padding: 1em;
+}
+
+.outer-container h1 { 
+    display: flex;
+    justify-content: center;
+}
+
+.outer-container h3{ 
+    padding: 1.5em;
+}
+
+.outer-container li { 
+    background-color: #C5C3E9;
+    padding-bottom: .25em;
+    margin-bottom: .25em;
+    border-radius: 3px;
+    list-style: none;
+
+}
+
+.inner-container { 
+    height: 300px;
+    background-color: #C5C3E9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+button { 
+    display: inline-block;
+    width: 75px; 
+    height: 25px;
+    margin: 1em .5em 1em .5em;
+    padding: 4px 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer; 
+}
+
+button:hover { 
+    background-color:#CFCCD6;
 }
 
 .timer { 
-    border: 1px solid pink;  
-    width: 150px;
-    height: 25px; 
-    margin: 1rem;
-    text-align: center;
-    font-size: 18px;
+    font-size: 25px;
 }
 
-.btn2 { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    flex-direction: row;
-    width: 100px; 
-    height: 15px; 
-    margin: 5px; 
-    background-color: #B2D3C2; 
+.log { 
+    overflow: auto;
+    height: auto;
+}
+
+#session-input { 
+    width: 90%;
+    padding: 3px 5px;
+    margin: 2px 0;
+    box-sizing: border-box;
+}
+
+#work-time { 
+    width: 90%;
+    padding: 3px 5px;
+    margin: 2px 0;
+    box-sizing: border-box;
+}
+
+#break-time { 
+    width: 90%;
+    padding: 3px 5px;
+    margin: 2px 0;
+    box-sizing: border-box;
+}
+
+@media screen and (min-width : 350px) { 
+    .inner-container{ 
+        width: 325px;
+    }
+}
+
+@media screen and (min-width : 400px) { 
+    .hero h1 { 
+        font-size: 35px;
+    }
+
+    .hero p { 
+        font-size: 22px;
+    }
+
+    .inner-container{ 
+        width: 350px;
+    }
+
+}
+
+
+@media screen and (min-width: 500px) { 
+
+    .hero h1 { 
+        font-size: 40px;
+    }
+    
+    .hero p { 
+        font-size: 28px;
+    }
+
+    .inner-container { 
+        width: 450px;
+        height: 350px;
+        margin: 0em 1.5em 0em 1.5em;
+    }
+
+    button { 
+        width: 100px; 
+        height: 35px;
+        padding: 6px 8px;
+        font-size: 18px;
+    }
+
+    #session-input { 
+        width: 75%;
+        padding: 6px 10px;
+        margin: 3px 0;
+        box-sizing: border-box;
+    }
+    
+    #work-time { 
+        width: 75%;
+        padding: 6px 10px;
+        margin: 3px 0;
+        box-sizing: border-box;
+    }
+    
+    #break-time { 
+        width: 75%;
+        padding: 6px 10px;
+        margin: 3px 0;
+    }
+
+    .outer-container li { 
+        height: 35px;
+        padding-top: .5em;
+        padding-bottom: .5em;
+        margin: 0em 1.5em .5em 1.5em;
+        border-radius: 5px;
+        
+    }
+}
+
+
+@media screen and (min-width: 700px) { 
+    .inner-container{ 
+        width: 625px;
+    }
+
+    #session-input { 
+        width: 65%;
+        padding: 6px 10px;
+        margin: 3px 0;
+        box-sizing: border-box;
+    }
+    
+    #work-time { 
+        width: 65%;
+        padding: 6px 10px;
+        margin: 3px 0;
+        box-sizing: border-box;
+    }
+    
+    #break-time { 
+        width: 65%;
+        padding: 6px 10px;
+        margin: 3px 0;
+    }
+
+    .outer-container li { 
+        height: 35px;
+        padding-top: .5em;
+        padding-bottom: .5em;
+        margin: 0em 1.5em .5em 1.5em;
+        border-radius: 5px;
+        
+    }
+}
+
+@media screen and (min-width: 1000px) { 
+    
+    .hero h1 { 
+        font-size: 55px;
+    }
+    
+    .hero p { 
+        font-size: 35px;
+    }
+
+    h3 { 
+        font-size: 35px;
+    }
+
+   
 }
